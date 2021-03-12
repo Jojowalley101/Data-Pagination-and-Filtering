@@ -117,10 +117,10 @@ function addPagination(list) {
 // 
 function searchingForData() {
    var input, filter, ul, li, a, i, txtValue;
-   input = document.getElementById('myInput');
+   input = document.getElementById('.student-list');
    filter = input.value.toUpperCase();
-   ul = document.getElementById("myUL");
-   li = ul.getElementsByTagName('li');
+   ul = document.getElementById(".active");
+   li = ul.getElementsByTagName('.link-list');
 
 //Loop through all list items, and hide those who don't match the search query
    for (i = 0; i < li.length; i++) {
@@ -131,7 +131,10 @@ function searchingForData() {
       } else {
          li[i].style.display = "none";
    }
+   
+   searchingForData().display;
 }
+
 
 
 // Call functions
@@ -139,5 +142,4 @@ function searchingForData() {
 showPage(data, 1);
 addPagination(data);
 searchingForData();
-
 }
