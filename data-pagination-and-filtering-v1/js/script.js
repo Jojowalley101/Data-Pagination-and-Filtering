@@ -3,7 +3,7 @@ Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
 */
 
-
+"use strict";
 
 /*
 For assistance:
@@ -112,34 +112,58 @@ function addPagination(list) {
    // call the showPage function passing the `list` parameter and page to display as arguments
    // showPage(list, page);
 
+const search = document.getElementById('#search-input');
+const submit = document.querySelector('#submit');
 
-// @source https://www.w3schools.com/howto/howto_js_filter_lists.asp
-// 
-function searchingForData() {
-   var input, filter, ul, li, a, i, txtValue;
-   input = document.getElementById('.student-list');
-   filter = input.value.toUpperCase();
-   ul = document.getElementById(".active");
-   li = ul.getElementsByTagName('.link-list');
+/* Variable to store HTMLCollection of table cells that you'll search through
+   But the same basic technique can work with other collections, even an array of objects */
+const dataCells = document.querySelectorAll('data');
 
-//Loop through all list items, and hide those who don't match the search query
-   for (i = 0; i < li.length; i++) {
-      a = li[i].getElementsByTagName("a")[0];
-      txtValue = a.textContent || a.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-         li[i].style.display = "";
-      } else {
-         li[i].style.display = "none";
+// Helpful log statements
+console.log(search);
+console.log(submit);
+console.log(dataCells);
+
+function searchForStudents(searchInput, names) {
+   console.log(searchInput);
+   console.log(names);
+   for (let i = 0; i < names.length; i++) {
+      names[i] = '';
+      if (searchInput.value.length !== 0 && names[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
+         names[i] = 'match';
+      }
    }
-   
-   searchingForData().display;
 }
 
+/**
+ * Event listeners for buttons - Invoke your search function in the body of the callbacks in the event listeners below
+ */
 
+/* submit listener */
+submit.addEventListener('click', (event) => {
+   event.preventDefault();
+
+   // Invoke your search function here - Arguments: search, tableCells
+   searchForStudents(search, dataCells);
+
+
+   // Helpful log statement to test function
+   console.log('Submit button is functional!');
+});
+
+/* submit listener */
+search.addEventListener('keyup', () => {
+
+   // Invoke your search function here - Arguments: search, tableCells
+   searchForStudents(search, dataCells);
+
+
+   // Helpful log statement to test function
+   console.log('Keyup event on the Search input is functional!');
+});
 
 // Call functions
 
 showPage(data, 1);
 addPagination(data);
-searchingForData();
-}
+searchForStudents(search, dataCells);
