@@ -31,7 +31,7 @@ function showPage(list, page) {
    for (let i = 0; i < list.length; i++) {
       if (i >= startIndex && i < endIndex) {
                //temperate literal = `string text ${expression} string text
-         let studentListIndexer = data[i];
+         let studentListIndexer = list[i];
                // create the elements needed to display the student information
          let studentItem = `<li class="student-item cf">
     <div class="student-details">
@@ -120,7 +120,7 @@ function searchBarFunc(list) {
       document.querySelector('.student-list').appendChild(noSearchFound);
 
       if (searchFiltered.length === 0) {
-         noSearchFound.textContent = `No results found for "${searchInput.value}"`;
+         noSearchFound.textContent = `No results found for ${searchInput.value}`;
       } else {
          noSearchFound.textContent = '';
       }
