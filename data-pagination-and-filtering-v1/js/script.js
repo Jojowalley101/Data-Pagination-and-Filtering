@@ -112,58 +112,100 @@ function addPagination(list) {
    // call the showPage function passing the `list` parameter and page to display as arguments
    // showPage(list, page);
 
-const search = document.getElementById('#search-input');
-const submit = document.querySelector('#submit');
+// const search = document.getElementById('.student-search');
+// const submit = document.querySelector('.student-search button');
 
 /* Variable to store HTMLCollection of table cells that you'll search through
    But the same basic technique can work with other collections, even an array of objects */
-const dataCells = document.querySelectorAll('data');
 
-// Helpful log statements
-console.log(search);
-console.log(submit);
-console.log(dataCells);
+// const studentList2 = document.querySelector('.student-list');
+// // Helpful log statements
+// console.log(search);
+// console.log(submit);
+// console.log(studentList2);
 
-function searchForStudents(searchInput, names) {
-   console.log(searchInput);
-   console.log(names);
-   for (let i = 0; i < names.length; i++) {
-      names[i] = '';
-      if (searchInput.value.length !== 0 && names[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
-         names[i] = 'match';
+// function searchForStudents(searchInput, data) {
+//    console.log(searchInput);
+//    console.log(data);
+//    for (let i = 0; i < data.length; i++) {
+//       data[i] = 'No results found';
+//       if (searchInput.value.length !== 0 && data[i].textContent.toLowerCase().includes(searchInput.value.toLowerCase())) {
+//          data[i] = showPage(data, 1);
+//       }
+//    }
+// }
+
+const header = document.querySelector('.header');
+header.innerHTML += `<label for="search" class="student-search">
+            <span>Search by name</span>
+            <input id="search" placeholder="Search by name...">
+            <button type="button"><img src="img/icn-search.svg" alt="Search icon"></button>
+          </label>`;
+const searchInput = document.querySelector('#search');
+const submitButton = document.querySelector('button');
+
+function searchBarFunc(list) {
+   const filtered = searchInput.value.toLowerCase();
+   const searchFiltered = [];
+
+   if (filtered.length !== 0) {
+      for (let i = 0; i < list.length; i++) {
+         const fullName = `${list[i].name.first.toLowerCase()} ${list[i].name.last.toLowerCase()}`;
+         if (fullName.includes(filtered)) {
+            searchFiltered.push(list[i]);
+         }
       }
+
+      showPage(searchFiltered, 1);
+      addPagination(searchFiltered);
+
+      const noSearchFound = document.createElement('span');
+      document.querySelector('.student-list').appendChild(noSearchFound);
+
+      if (searchFiltered.length === 0) {
+         noSearchFound.textContent = `No results found for "${searchInput.value}"`;
+      } else {
+         noSearchFound.textContent = '';
+      }
+   } else {
+      showPage(list, 1);
+      addPagination(list);
    }
 }
+
+
+
+
+
 
 /**
  * Event listeners for buttons - Invoke your search function in the body of the callbacks in the event listeners below
  */
 
-/* submit listener */
-submit.addEventListener('click', (event) => {
+// /* submit listener */
+submitButton.addEventListener('click', (event) => {
    event.preventDefault();
-
-   // Invoke your search function here - Arguments: search, tableCells
-   searchForStudents(search, dataCells);
-
-
-   // Helpful log statement to test function
+   searchBarFunc(data);
    console.log('Submit button is functional!');
 });
 
-/* submit listener */
-search.addEventListener('keyup', () => {
-
-   // Invoke your search function here - Arguments: search, tableCells
-   searchForStudents(search, dataCells);
-
-
-   // Helpful log statement to test function
-   console.log('Keyup event on the Search input is functional!');
+// //    // Helpful log statement to test function
+   
+// // /* submit listener */
+searchInput.addEventListener('keyup', () => {
+   searchBarFunc(data);
 });
+
+// //    // Invoke your search function here - Arguments: search, tableCells
+//    searchForStudents(searchInput, data);
+
+
+// //    // Helpful log statement to test function
+//    console.log('Keyup event on the Search input is functional!');
+// });
 
 // Call functions
 
 showPage(data, 1);
 addPagination(data);
-searchForStudents(search, dataCells);
+//searchForStudents(searchInput, data);
