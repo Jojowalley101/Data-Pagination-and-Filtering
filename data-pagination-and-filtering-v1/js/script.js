@@ -70,13 +70,13 @@ function addPagination(list) {
       </li >`;
       linkList.insertAdjacentHTML('beforeend', button);
    }
-   //let btn1 = document.querySelector('.link-list').firstChild;
+   let btn1 = document.querySelector('.link-list').firstChild;
    //btn1.className = 'active';
    function goToPage(event) {
       if (event.target.tagName == "BUTTON") {
-         //let classNameActive = document.querySelector('.active');
+         let classNameActive = document.querySelector('.active');
          //classNameActive.className = '';
-         event.target = 'active';
+         event.target.classNameActive = 'active';
          //console.log(event.target);
          showPage(list, event.target.textContent);
 
